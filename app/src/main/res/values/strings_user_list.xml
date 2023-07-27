@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_is_student">Is student?</string>
+    <string name="user_age">%d y.o.</string>
+    <string name="user_name">%s</string>
+</resources>

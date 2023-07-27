@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="4dp"
+    app:cardCornerRadius="16dp"
+    app:rippleColor="@android:color/transparent"
+    app:strokeWidth="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/chicoding.textview.user_list.primary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_toStartOf="@id/check_is_student"
+            tools:text="Andriy" />
+
+        <TextView
+            android:id="@+id/tv_age"
+            style="@style/chicoding.textview.user_list.secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_name"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_toStartOf="@id/tv_is_student"
+            tools:text="22" />
+
+        <TextView
+            android:id="@+id/tv_is_student"
+            style="@style/chicoding.textview.user_list.secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tv_age"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@id/check_is_student"
+            android:text="@string/text_is_student" />
+
+        <CheckBox
+            android:id="@+id/check_is_student"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tv_age"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/check_checked"
+            android:button="@android:color/transparent"
+            android:clickable="false"
+            android:scaleX="0.65"
+            android:scaleY="0.65" />
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

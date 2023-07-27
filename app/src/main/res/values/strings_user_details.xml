@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="user_details_name">%s</string>
+    <string name="user_details_default_name_tv">Name</string>
+    <string name="user_details_age">%d y.o.</string>
+    <string name="user_details_default_age_tv">Age</string>
+    <string name="user_details_is_student">You are a student</string>
+    <string name="user_details_is_not_student">You are not a student</string>
+</resources>
