@@ -1,4 +1,4 @@
-package dev.chicodingtest
+package dev.chicodingtest.ui.userdetails
 
 import android.util.Log
 import androidx.lifecycle.*
@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 
 class UserDetailsViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-    private var _user = MutableLiveData<User>()
+    private val _user = MutableLiveData<User>()
     val user: LiveData<User>
         get() = _user
 
@@ -39,5 +39,4 @@ class UserDetailsViewModel(private val userRepository: UserRepository) : ViewMod
             throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
-
 }

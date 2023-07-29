@@ -12,8 +12,7 @@ import dev.chicodingtest.databinding.ListItemUserBinding
 import dev.chicodingtest.model.User
 
 class UserAdapter(
-    private val onCheckboxListener: (chosenUser: User) -> Unit,
-    private val onItemListener: (user: User) -> Unit
+    private val onCheckboxListener: (chosenUser: User) -> Unit, private val onItemListener: (user: User) -> Unit
 ) : ListAdapter<User, UserAdapter.UserViewHolder>(UserItemCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -45,7 +44,6 @@ class UserAdapter(
     class UserViewHolder(
         private val binding: ListItemUserBinding, onCheckboxListener: (position: Int) -> Unit, onItemListener: (position: Int) -> Unit
     ) : ViewHolder(binding.root) {
-
         init {
             binding.checkIsStudent.setOnClickListener {
                 onCheckboxListener(this@UserViewHolder.adapterPosition)

@@ -16,8 +16,8 @@ class UsersListItemDecorator(
         with(outRect) {
             left = horizontalOffset
             right = horizontalOffset
-            bottom = if (isLastItem(currentPosition, state.itemCount)) outerVerticalOffset else innerVerticalOffset
             top = if (isFirstItem(currentPosition)) outerVerticalOffset else innerVerticalOffset
+            bottom = if (isLastItem(currentPosition, state.itemCount)) outerVerticalOffset else innerVerticalOffset
         }
     }
 

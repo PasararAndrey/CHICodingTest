@@ -16,9 +16,8 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     fun toggleUserStudentStatus(clickedUser: User) {
         viewModelScope.launch(Dispatchers.IO) {
-            Log.d(TAG, "Clicked on user:${clickedUser} ")
-            val newUser = clickedUser.copy(isStudent = !clickedUser.isStudent)
-            Log.d(TAG, "toggleUserStudentStatus: $newUser")
+            val newUser: User = clickedUser.copy(isStudent = !clickedUser.isStudent)
+            Log.d(TAG, "Updated user: $newUser")
             userRepository.updateUserStudentStatus(newUser.id, newUser.isStudent)
         }
     }
