@@ -1,49 +1,61 @@
 package dev.chicodingtest.ui.adduser
 
 import androidx.lifecycle.*
-import dev.chicodingtest.database.UserRepository
+import dev.chicodingtest.data.UserRepository
 import dev.chicodingtest.model.User
 import dev.chicodingtest.util.Constants
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class AddUserViewModel(private val userRepository: UserRepository) : ViewModel() {
 
+    private val vmIOCoroutineContext = viewModelScope.coroutineContext + Dispatchers.IO
     private val _birthday = MutableLiveData<Long>()
     val birthday: LiveData<Long>
         get() = _birthday
     private val _addUserEvent: Channel<AddUserEvent> = Channel()
     val addUserEvents: Flow<AddUserEvent> = _addUserEvent.receiveAsFlow()
-    var userName: String = ""
-    var userAge: String = ""
+    val userName = MutableLiveData("")
+    val userAge = MutableLiveData("")
+    val userDescription = MutableLiveData("")
 
     fun updateBirthday(birthday: Long) {
         _birthday.value = birthday
     }
 
+    //After validation sure that all values are not null
     fun onAddUser() {
-        if (isInputNotValid()) return
-        val user = User(userName, userAge.toInt(), birthday = birthday.value!!)
-        createUser(user)
+        if (isInputNotValid())
+            return
+        else {
+            val user = User(userName.value!!, userAge.value!!.toInt(), birthday = birthday.value!!, description = userDescription.value!!)
+            createUser(user)
+        }
     }
 
     private fun isInputNotValid(): Boolean {
-        return (isNameEmpty() || isAgeEmpty() || isAgeNotInt() || isBirthdayNotChosen())
+        return (isNameNullOrBlank() || isAgeNullOrBlank() || isDescriptionNullOrBlank() || isAgeNotInt() || isBirthdayNotChosen())
+    }
+
+    private fun isDescriptionNullOrBlank(): Boolean {
+        return if (userDescription.value.isNullOrBlank()) {
+            showNotValidInput("Description cannot be empty")
+            true
+        } else false
     }
 
     private fun isBirthdayNotChosen(): Boolean {
         return if (birthday.value == null) {
             showNotValidInput("Birthday must be chosen")
             true
-        } else {
-            false
-        }
+        } else false
     }
 
     private fun isAgeNotInt(): Boolean {
         return try {
-            userAge.toInt()
+            userAge.value?.toInt() ?: true
             false
         } catch (e: NumberFormatException) {
             showNotValidInput("Age must be a number")
@@ -51,15 +63,15 @@ class AddUserViewModel(private val userRepository: UserRepository) : ViewModel()
         }
     }
 
-    private fun isAgeEmpty(): Boolean {
-        return if (userAge.isBlank()) {
+    private fun isAgeNullOrBlank(): Boolean {
+        return if (userAge.value.isNullOrBlank()) {
             showNotValidInput("Age cannot be empty")
             true
         } else false
     }
 
-    private fun isNameEmpty(): Boolean {
-        return if (userName.isBlank()) {
+    private fun isNameNullOrBlank(): Boolean {
+        return if (userName.value.isNullOrBlank()) {
             showNotValidInput("Name cannot be empty")
             true
         } else false
@@ -72,7 +84,7 @@ class AddUserViewModel(private val userRepository: UserRepository) : ViewModel()
     }
 
     private fun createUser(user: User) {
-        viewModelScope.launch {
+        viewModelScope.launch(vmIOCoroutineContext) {
             userRepository.addUser(user)
             _addUserEvent.send(AddUserEvent.NavigateBackWithMessage(Constants.ADD_USER_RESULT_OK))
         }

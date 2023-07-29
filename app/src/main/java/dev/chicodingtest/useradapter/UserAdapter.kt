@@ -1,27 +1,36 @@
-package dev.chicodingtest.adapter
+package dev.chicodingtest.useradapter
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import dev.chicodingtest.R
 import dev.chicodingtest.databinding.ListItemUserBinding
 import dev.chicodingtest.model.User
 
 class UserAdapter(
-    private val onCheckboxListener: (chosenUser: User) -> Unit, private val onItemListener: (user: User) -> Unit
-) : ListAdapter<User, UserAdapter.UserViewHolder>(UserItemCallback) {
+    private val userAdapterListeners: UserAdapterListeners
+) : ListAdapter<User, UserViewHolder>(UserItemCallback) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = ListItemUserBinding.inflate(layoutInflater, parent, false)
-        return UserViewHolder(view, onCheckboxListener = { position: Int ->
-            onCheckboxListener(getItem(position))
-        }, onItemListener = { position ->
-            onItemListener(getItem(position))
-        })
+        return UserViewHolder(
+            view,
+            object : UserViewHolderListeners {
+                override fun onCheckboxClickedListener(position: Int) {
+                    userAdapterListeners.onCheckboxClickedListener(getItem(position))
+                }
+
+                override fun onClickListener(position: Int) {
+                    userAdapterListeners.onClickListener(getItem(position).id)
+                }
+
+                override fun onLongClickListener(position: Int) {
+                    userAdapterListeners.onLongClickListener((getItem(position).id))
+                }
+            }
+        )
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
@@ -41,36 +50,10 @@ class UserAdapter(
         }
     }
 
-    class UserViewHolder(
-        private val binding: ListItemUserBinding, onCheckboxListener: (position: Int) -> Unit, onItemListener: (position: Int) -> Unit
-    ) : ViewHolder(binding.root) {
-        init {
-            binding.checkIsStudent.setOnClickListener {
-                onCheckboxListener(this@UserViewHolder.adapterPosition)
-            }
-            binding.root.setOnClickListener {
-                onItemListener(this@UserViewHolder.adapterPosition)
-            }
-        }
-
-        fun bind(item: User) {
-            binding.tvName.text = item.name
-            binding.tvAge.text = binding.root.context.getString(R.string.user_age, item.age)
-            binding.checkIsStudent.isChecked = item.isStudent
-        }
-
-        fun bindIsStudent(isStudent: Boolean) {
-            Log.d(TAG, "bindIsStudent: $isStudent ")
-            binding.checkIsStudent.isChecked = isStudent
-        }
-    }
-
     companion object {
         const val IS_STUDENT_KEY = "is_student_key"
-        private const val TAG = "UserAdapter"
     }
 }
-
 
 private object UserItemCallback : DiffUtil.ItemCallback<User>() {
     override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {

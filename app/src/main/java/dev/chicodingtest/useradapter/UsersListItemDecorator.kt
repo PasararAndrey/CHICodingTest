@@ -1,4 +1,4 @@
-package dev.chicodingtest.adapter
+package dev.chicodingtest.useradapter
 
 import android.graphics.Rect
 import android.view.View

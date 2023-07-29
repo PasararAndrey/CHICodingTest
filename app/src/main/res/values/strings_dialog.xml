@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialog_delete_title">You want to delete this User?</string>
+    <string name="dialog_delete_yes">Yes</string>
+    <string name="dialog_delete_no">No</string>
+    <string name="dialog_sort_title">Choose sort order</string>
+    <string name="dialog_sort_cancel">Cancel</string>
+    <string name="dialog_sort_ok">OK</string>
+</resources>

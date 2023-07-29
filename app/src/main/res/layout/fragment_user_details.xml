@@ -64,4 +64,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/user_is_student"
         tools:text="Your birthday: 13/12/2000" />
+
+    <TextView
+        android:id="@+id/user_description"
+        style="@style/CHICodingTest.TextView.UserDetails.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/user_birthday"
+        tools:text="Some data about me " />
 </androidx.constraintlayout.widget.ConstraintLayout>

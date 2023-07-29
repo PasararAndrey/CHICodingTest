@@ -40,11 +40,11 @@ class UserDetailsFragment : Fragment(R.layout.fragment_user_details) {
                 else R.string.user_details_is_not_student
             )
             binding.userBirthday.text = getString(R.string.user_details_birthday, Date(newUser.birthday).formatToStandardString())
+            binding.userDescription.text = getString(R.string.user_details_description, newUser.description)
         }
     }
 
     private fun getUser() {
-        Log.d(TAG, "User value in viewmodel on view creation: ${detailsViewModel.user.value}")
         val userId = arguments?.getInt("user_id")
         if (userId != null) {
             detailsViewModel.getUserById(userId)

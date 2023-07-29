@@ -1,4 +1,4 @@
-package dev.chicodingtest.database
+package dev.chicodingtest.data
 
 import android.content.Context
 import androidx.room.Database

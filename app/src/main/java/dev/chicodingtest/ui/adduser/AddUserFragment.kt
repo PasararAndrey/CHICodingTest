@@ -41,6 +41,7 @@ class AddUserFragment : Fragment(R.layout.fragment_add_user) {
     private fun setListeners() {
         setNameTextListener()
         setAgeTextListener()
+        setDescriptionTextListener()
         setChooseBirthdayListener()
         addUserListener()
     }
@@ -51,15 +52,51 @@ class AddUserFragment : Fragment(R.layout.fragment_add_user) {
         }
     }
 
-    private fun setAgeTextListener() {
-        binding.inputAge.editText?.addTextChangedListener {
-            viewModel.userAge = it.toString()
+    //Survives configuration change
+    //At the same time doesn't duplicate setting text on the same instance
+    private fun setNameTextListener() {
+        var text = ""
+        binding.inputName.editText?.addTextChangedListener { editable ->
+            text = editable.toString()
+            viewModel.userName.value = editable.toString()
+        }
+        viewModel.userName.observe(viewLifecycleOwner) { newText: String ->
+            if (text == newText) {
+                return@observe
+            }
+            binding.inputName.editText?.setText(newText)
         }
     }
 
-    private fun setNameTextListener() {
-        binding.inputName.editText?.addTextChangedListener {
-            viewModel.userName = it.toString()
+    //Survives configuration change
+    //At the same time doesn't duplicate setting text on the same instance
+    private fun setAgeTextListener() {
+        var text = ""
+        binding.inputAge.editText?.addTextChangedListener { editable ->
+            text = editable.toString()
+            viewModel.userAge.value = editable.toString()
+        }
+        viewModel.userAge.observe(viewLifecycleOwner) { newText: String ->
+            if (text == newText) {
+                return@observe
+            }
+            binding.inputAge.editText?.setText(newText)
+        }
+    }
+
+    //Survives configuration change
+    //At the same time doesn't duplicate setting text on the same instance
+    private fun setDescriptionTextListener() {
+        var text = ""
+        binding.inputDescription.editText?.addTextChangedListener { editable ->
+            text = editable.toString()
+            viewModel.userDescription.value = editable.toString()
+        }
+        viewModel.userDescription.observe(viewLifecycleOwner) { newText: String ->
+            if (text == newText) {
+                return@observe
+            }
+            binding.inputDescription.editText?.setText(newText)
         }
     }
 
@@ -72,6 +109,14 @@ class AddUserFragment : Fragment(R.layout.fragment_add_user) {
     private fun observeChosenBirthday() {
         viewModel.birthday.observe(viewLifecycleOwner) { time ->
             binding.chosenBirthday.text = Date(time).formatToStandardString()
+        }
+    }
+
+    private fun chooseBirthdayWithDatePicker() {
+        val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("Select your birthday").build()
+        datePicker.show(requireActivity().supportFragmentManager, "Birthday")
+        datePicker.addOnPositiveButtonClickListener { time ->
+            viewModel.updateBirthday(time)
         }
     }
 
@@ -90,14 +135,6 @@ class AddUserFragment : Fragment(R.layout.fragment_add_user) {
                     }
                 }
             }
-        }
-    }
-
-    private fun chooseBirthdayWithDatePicker() {
-        val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("Select your birthday").build()
-        datePicker.show(requireActivity().supportFragmentManager, "Birthday")
-        datePicker.addOnPositiveButtonClickListener { time ->
-            viewModel.updateBirthday(time)
         }
     }
 
