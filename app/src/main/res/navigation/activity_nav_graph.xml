@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/animalsFragment"
-        android:name="dev.chicodingtest.ui.animals.AnimalsFragment"
+        android:name="dev.chicodingtest.ui.animals.screens.AnimalsFragment"
         android:label="AnimalsFragment"
         tools:layout="@layout/fragment_animals" />
 </navigation>

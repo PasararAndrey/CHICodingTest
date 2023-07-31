@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="240dp"
-    android:layout_margin="8dp"
     app:cardCornerRadius="16dp"
     app:strokeWidth="2dp">
 
-    <ImageView
-        android:id="@+id/animal_image"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        tools:src="@drawable/ic_launcher_background" />
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/animal_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <CheckBox
+            android:id="@+id/animal_is_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/favorite_icon"
+            android:button="@android:color/transparent"
+            android:clickable="false"
+            android:scaleX="0.65"
+            android:scaleY="0.65" />
+    </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>
